@@ -1,0 +1,12 @@
+.css1 {
+    margin-top: 3%;
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    padding: 2%;
+    margin-left: 40%;
+    background-color: cyan;
+    border-radius: 20px;
+    width: 15%;
+    border-style: groove;
+  }
