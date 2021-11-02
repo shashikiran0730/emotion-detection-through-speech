@@ -13,6 +13,7 @@ values = {"fearful": "https://firebasestorage.googleapis.com/v0/b/myproject-d9de
           "happy": "https://firebasestorage.googleapis.com/v0/b/myproject-d9de9.appspot.com/o/565-5650281_happy-boy-clipart-can-do-it-png-transparent-removebg-preview.png?alt=media&token=5964f656-e102-4f85-bb5c-ad4209209e39",
           "sad": "https://firebasestorage.googleapis.com/v0/b/myproject-d9de9.appspot.com/o/202-2022552_emotional-clipart-sad-dad-sad-clip-art-removebg.png?alt=media&token=3f1938a7-790e-4923-aea7-7f81ee2807b9",
           "angry": "https://firebasestorage.googleapis.com/v0/b/myproject-d9de9.appspot.com/o/clipart466731.png?alt=media&token=8dd82f61-b3ef-46f2-86c7-e1cd61f24ff3"
+        "disguist":"asdfg"
           }
 
 def extract_feature(file_name, mfcc, chroma):
