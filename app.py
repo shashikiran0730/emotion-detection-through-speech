@@ -1,10 +1,15 @@
-from flask import Flask
+from flask import Flask,url_for
 from flask.globals import request
 from flask.templating import render_template  
 import librosa
 import numpy as np
 import pickle
+import sounddevice as sd
+from scipy.io.wavfile import write
+import wavio as wv
+import os
 
+from werkzeug.utils import redirect
 filename=("models/emotionmodel.pkl")
 s=pickle.load(open(filename,'rb'))
 
@@ -13,7 +18,7 @@ values = {"fearful": "https://firebasestorage.googleapis.com/v0/b/myproject-d9de
           "happy": "https://firebasestorage.googleapis.com/v0/b/myproject-d9de9.appspot.com/o/565-5650281_happy-boy-clipart-can-do-it-png-transparent-removebg-preview.png?alt=media&token=5964f656-e102-4f85-bb5c-ad4209209e39",
           "sad": "https://firebasestorage.googleapis.com/v0/b/myproject-d9de9.appspot.com/o/202-2022552_emotional-clipart-sad-dad-sad-clip-art-removebg.png?alt=media&token=3f1938a7-790e-4923-aea7-7f81ee2807b9",
           "angry": "https://firebasestorage.googleapis.com/v0/b/myproject-d9de9.appspot.com/o/clipart466731.png?alt=media&token=8dd82f61-b3ef-46f2-86c7-e1cd61f24ff3",
-            "disguist":"asdfg"
+        "disgust":"asdfg"
           }
 
 def extract_feature(file_name, mfcc, chroma):
@@ -38,15 +43,39 @@ def index():
 
 @app.route('/',methods=["post"]) 
 def home():
+    try:
         r=[0,0]
         result=True
         audio=request.files.get('shashifile')
         feature=extract_feature(audio, mfcc=True, chroma=True)
         p=s.predict([feature])
-        # r="https://d29fhpw069ctt2.cloudfront.net/clipart/100203/preview/smiling_face_of_a_child_2_preview_9c89.png"
+            # r="https://d29fhpw069ctt2.cloudfront.net/clipart/100203/preview/smiling_face_of_a_child_2_preview_9c89.png"
         r=[p[0],values[p[0]]]
-        return render_template('inputfile.html',result1=result,r1=r)
+        audio_data = "C:/Users/babbl/SAMSUNG/recording1.wav"
+        return render_template('inputfile.html',result1=result,r1=r,s=audio_data) 
+    except:
+        return render_template('inputfile.html',r2='plz enter valid format')
+@app.route('/record')
+def record1():
+    return render_template('record.html')
 
-  
-if __name__ =='__main__':  
+@app.route('/record',methods=['post'])
+def record():
+    freq=44100
+    duration=5
+    recording = sd.rec(int(duration * freq), 
+                samplerate=freq, channels=2)
+    sd.wait()
+    wv.write("recording1.wav", recording, freq, sampwidth=2)
+    r=[0,0]
+    result=True 
+    audio_data = "C:/Users/babbl/SAMSUNG/recording1.wav"
+    feature=extract_feature(audio_data, mfcc=True, chroma=True)
+    p=s.predict([feature])
+        # r="https://d29fhpw069ctt2.cloudfront.net/clipart/100203/preview/smiling_face_of_a_child_2_preview_9c89.png"
+    r=[p[0],values[p[0]]]
+    #return redirect(".",{'result1':result,'r1':r}) 
+    return render_template('inputfile.html',result1=result,r1=r,a=audio_data)
+
+if __name__ =='__main__': 
     app.run(debug = True)  

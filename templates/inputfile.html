@@ -38,14 +38,19 @@
           }
           body{
               background-color: aliceblue;
-             
 
           } 
         h1{
             font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
             text-align: center;
         }
-      
+      .warning{
+         font-size: xx-large;
+          text-align: center;
+          color: red;
+          margin-top: 10%;
+          
+      }
     </style>
   
     <h1>EMOTION DETECTION THROUGH SPEECH</h1>
@@ -58,12 +63,19 @@
            <div class="s"><input type="submit" value="submit"></div>
         </form>
         {% if result1%}
-        
               <div class="ans">{{r1[0]}}</div>
              <div class="pic">
-                    <img src="{{r1[1]}}" width="250"></div>
-        
+                 <img src="{{r1[1]}}" width="250"></div>
+                    
         {% endif %}
+        <div class="warning">
+            {{ r2 }}
+        </h1>
+        <p> <a href='/record'> record </a>
+        
+        </p>
+       
+    </div>
 
     </body>
 </html>
