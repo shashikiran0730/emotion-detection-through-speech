@@ -51,6 +51,12 @@
           margin-top: 10%;
           
       }
+      button {
+        background-color:cyan;
+        border: black;
+        padding: 12px 22px;
+      }
+    
     </style>
   
     <h1>EMOTION DETECTION THROUGH SPEECH</h1>
@@ -66,14 +72,17 @@
               <div class="ans">{{r1[0]}}</div>
              <div class="pic">
                  <img src="{{r1[1]}}" width="250"></div>
-                    
         {% endif %}
         <div class="warning">
-            {{ r2 }}
+            {{ r2 }} 
+            <audio src={{a}} controls>
+    asd
+                </audio>  
         </h1>
-        <p> <a href='/record'> record </a>
         
-        </p>
+        <button><a href='/record'>RECODER </a> </div></button>
+        
+    
        
     </div>
 

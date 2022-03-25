@@ -1,3 +1,4 @@
+import imp
 from flask import Flask,url_for
 from flask.globals import request
 from flask.templating import render_template  
@@ -8,17 +9,15 @@ import sounddevice as sd
 from scipy.io.wavfile import write
 import wavio as wv
 import os
-
-from werkzeug.utils import redirect
 filename=("models/emotionmodel.pkl")
 s=pickle.load(open(filename,'rb'))
 
-values = {"fearful": "https://firebasestorage.googleapis.com/v0/b/myproject-d9de9.appspot.com/o/59-596556_fear-clipart-fear-emotion-cartoon-face-of-fear-removebg-preview.png?alt=media&token=c451d9cc-5fa7-47e1-bfa6-4be37e358ea8",
+d = {"fearful": "https://firebasestorage.googleapis.com/v0/b/myproject-d9de9.appspot.com/o/59-596556_fear-clipart-fear-emotion-cartoon-face-of-fear-removebg-preview.png?alt=media&token=c451d9cc-5fa7-47e1-bfa6-4be37e358ea8",
           "calm": "https://d29fhpw069ctt2.cloudfront.net/clipart/100203/preview/smiling_face_of_a_child_2_preview_9c89.png",
           "happy": "https://firebasestorage.googleapis.com/v0/b/myproject-d9de9.appspot.com/o/565-5650281_happy-boy-clipart-can-do-it-png-transparent-removebg-preview.png?alt=media&token=5964f656-e102-4f85-bb5c-ad4209209e39",
           "sad": "https://firebasestorage.googleapis.com/v0/b/myproject-d9de9.appspot.com/o/202-2022552_emotional-clipart-sad-dad-sad-clip-art-removebg.png?alt=media&token=3f1938a7-790e-4923-aea7-7f81ee2807b9",
           "angry": "https://firebasestorage.googleapis.com/v0/b/myproject-d9de9.appspot.com/o/clipart466731.png?alt=media&token=8dd82f61-b3ef-46f2-86c7-e1cd61f24ff3",
-        "disgust":"asdfg"
+        "disgust":"https://firebasestorage.googleapis.com/v0/b/emotiondetection-1ccf6.appspot.com/o/photo_2022-01-02_20-00-18-removebg-preview.png?alt=media&token=38f24571-addd-439f-b47c-28928541876a"
           }
 
 def extract_feature(file_name, mfcc, chroma):
@@ -50,11 +49,11 @@ def home():
         feature=extract_feature(audio, mfcc=True, chroma=True)
         p=s.predict([feature])
             # r="https://d29fhpw069ctt2.cloudfront.net/clipart/100203/preview/smiling_face_of_a_child_2_preview_9c89.png"
-        r=[p[0],values[p[0]]]
-        audio_data = "C:/Users/babbl/SAMSUNG/recording1.wav"
-        return render_template('inputfile.html',result1=result,r1=r,s=audio_data) 
+        r=[p[0],d[p[0]]]
+        print(r)
+        return render_template('inputfile.html',result1=result,r1=r) 
     except:
-        return render_template('inputfile.html',r2='plz enter valid format')
+        return render_template('inputfile.html',r2='Please Enter Valid Format')
 @app.route('/record')
 def record1():
     return render_template('record.html')
@@ -73,7 +72,7 @@ def record():
     feature=extract_feature(audio_data, mfcc=True, chroma=True)
     p=s.predict([feature])
         # r="https://d29fhpw069ctt2.cloudfront.net/clipart/100203/preview/smiling_face_of_a_child_2_preview_9c89.png"
-    r=[p[0],values[p[0]]]
+    r=[p[0],d[p[0]]]
     #return redirect(".",{'result1':result,'r1':r}) 
     return render_template('inputfile.html',result1=result,r1=r,a=audio_data)
 
