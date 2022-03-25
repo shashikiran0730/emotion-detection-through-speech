@@ -8,7 +8,6 @@ import pickle
 import sounddevice as sd
 from scipy.io.wavfile import write
 import wavio as wv
-import os
 filename=("models/emotionmodel.pkl")
 s=pickle.load(open(filename,'rb'))
 
